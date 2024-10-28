@@ -2,7 +2,6 @@ import React from "react";
 import ProjectCard from "./ProjectCard";
 import ModalClick from "../Modal";
 import ProjectPost from "./ProjectPost";
-
 type Project = {
   id: string;
   _id: string;
@@ -11,11 +10,9 @@ type Project = {
   livelink?: string;
   githublink?: string;
 };
-
 interface AllProjectsProps {
   projects: Project[];
 }
-
 const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
   return (
     <div>
@@ -39,5 +36,4 @@ const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
     </div>
   );
 };
-
 export default AllProjects;

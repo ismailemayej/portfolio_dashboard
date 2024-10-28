@@ -33,7 +33,7 @@ const ProjectUpdate: React.FC<ProjectUpdateProps> = ({ projectData }) => {
 
   const imageUrl = isValidUrl(projectData?.image || "")
     ? projectData.image
-    : "/fallback-image.jpg";
+    : "";
 
   const { register, handleSubmit } = useForm<Inputs>();
 
