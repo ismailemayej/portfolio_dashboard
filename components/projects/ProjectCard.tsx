@@ -6,26 +6,27 @@ import ModalClick from "../Modal";
 import ProjectUpdate from "./ProjectUpdate";
 
 interface Props {
-  image: string;
-  overview: string;
+  _id: string;
+  image?: string;
   livelink?: string;
   githublink?: string;
-  id: string;
+  overview: string;
 }
-const ProjectCard = ({ image, overview, livelink, githublink, id }: Props) => {
-  const project = { image, overview, livelink, githublink, id };
+
+const ProjectCard = ({ _id, image, overview, livelink, githublink }: Props) => {
+  const project = { _id, image, overview, livelink, githublink };
 
   // Helper function to validate URL
   const isValidUrl = (url: string) =>
     url.startsWith("/") ||
     url.startsWith("http://") ||
     url.startsWith("https://");
-  const imageUrl = isValidUrl(image) ? image : "/fallback-image.jpg";
+  const imageUrl = isValidUrl(image || "") ? image : "/fallback-image.jpg";
 
   return (
     <div className="relative overflow-hidden h-62 rounded-lg shadow-lg border transition delay-150 duration-300 ease-in-out border-[#2A0E61]">
       <Image
-        src={imageUrl}
+        src={imageUrl as string}
         alt="project image"
         width={1000}
         height={1000}
@@ -47,9 +48,9 @@ const ProjectCard = ({ image, overview, livelink, githublink, id }: Props) => {
             Github
           </Link>
         )}
-        <DeleteAction id={id} name="projects" />
+        <DeleteAction id={_id} name="projects" />
         <ModalClick
-          button="update"
+          button="Update"
           title="Edit your project"
           text={<ProjectUpdate projectData={project} />}
         />

@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-indigo-600">
-          <img src="/logo.png" alt="Logo" className="h-10" />{" "}
+          logo
           {/* Replace with your logo path */}
         </Link>
 

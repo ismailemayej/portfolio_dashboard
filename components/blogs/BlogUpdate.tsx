@@ -8,14 +8,24 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 
 type Inputs = {
-  image: string;
+  image?: string;
   title: string;
   category: string;
   details: string;
   _id: string;
 };
 
-const PostUpdate = ({ blogData }: any) => {
+interface PostUpdateProps {
+  blogData: {
+    _id: string;
+    image: string;
+    title: string;
+    category: string;
+    details: string;
+  };
+}
+
+const PostUpdate: React.FC<PostUpdateProps> = ({ blogData }) => {
   const {
     register,
     handleSubmit,
@@ -27,9 +37,9 @@ const PostUpdate = ({ blogData }: any) => {
       const id = blogData._id;
       const res = await Update(data, "blogs", id);
       if (res.acknowledged === true) {
-        toast.success("Update Successfull");
+        toast.success("Update Successful");
       } else {
-        toast.error("update unsuccessfull");
+        toast.error("Update Unsuccessful");
       }
     } catch (error) {
       console.error("Failed to update post:", error);
@@ -41,7 +51,7 @@ const PostUpdate = ({ blogData }: any) => {
       <Input
         defaultValue={blogData.image || ""}
         type="text"
-        placeholder="Image Url"
+        placeholder="Image URL"
         className="py-2"
         {...register("image", { required: true })}
       />
@@ -50,7 +60,7 @@ const PostUpdate = ({ blogData }: any) => {
       <Input
         defaultValue={blogData.title || ""}
         type="text"
-        placeholder="Title name"
+        placeholder="Title"
         className="py-2"
         {...register("title", { required: true })}
       />

@@ -2,7 +2,7 @@
 import { LucideGavel, Notebook, Projector } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { use } from "react";
+import React from "react";
 type TItem = {
   name: string;
   icon: React.ReactNode;

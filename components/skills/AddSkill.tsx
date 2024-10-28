@@ -1,6 +1,5 @@
 "use client";
 import { Post } from "@/utils/api";
-
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
@@ -11,11 +10,11 @@ import { toast } from "sonner";
 type Inputs = {
   skilllogo: string | undefined | URL;
   skillname: string;
-  skillpercentage: number;
+  skillpercentage: number | null;
   _id: string;
 };
 
-const SkillPost = () => {
+const SkillPost: React.FC = () => {
   const options = Array.from({ length: 100 }, (_, i) => i + 1);
   const [selectedPercentage, setSelectedPercentage] = useState<number | null>(
     null
@@ -42,8 +41,8 @@ const SkillPost = () => {
     }
   };
 
-  const handleDropdownSelect = (key: React.Key) => {
-    const selectedValue = parseInt(key as string, 10);
+  const handleDropdownSelect = (key: string) => {
+    const selectedValue = parseInt(key, 10);
     setSelectedPercentage(selectedValue);
     setValue("skillpercentage", selectedValue);
   };
@@ -65,9 +64,9 @@ const SkillPost = () => {
       <Select>
         <SelectTrigger className="w-[180px] my-2">
           <Button>
-            {selectedPercentage
+            {selectedPercentage !== null
               ? `Selected: ${selectedPercentage}%`
-              : "Choose a persentage number"}
+              : "Choose a percentage number"}
           </Button>
         </SelectTrigger>
         <SelectContent className="overflow-auto max-h-80">
@@ -85,7 +84,7 @@ const SkillPost = () => {
       <input
         type="hidden"
         {...register("skillpercentage", { required: true })}
-        value={selectedPercentage || ""}
+        value={selectedPercentage ?? ""}
       />
       {errors.skillpercentage && <span>This field is required</span>} <br />
       <Button className="w-full" color="primary" type="submit">
@@ -94,5 +93,4 @@ const SkillPost = () => {
     </form>
   );
 };
-
 export default SkillPost;

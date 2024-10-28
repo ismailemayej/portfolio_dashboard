@@ -6,12 +6,12 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
 
 type BlogData = {
-  image?: string;
+  _id: string;
+  image: string;
   title: string;
   category: string;
-  _id: string;
+  details: string;
 };
-
 const isValidUrl = (url: string) => {
   return (
     url.startsWith("/") ||

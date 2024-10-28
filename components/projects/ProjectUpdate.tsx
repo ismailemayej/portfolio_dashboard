@@ -6,46 +6,58 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
+
 type Inputs = {
   image?: string;
   livelink?: string;
   githublink?: string;
-  overview: any;
+  overview: string;
   _id: string;
 };
-const ProjectUpdate = ({ projectData }: any) => {
+
+interface ProjectUpdateProps {
+  projectData: {
+    _id: string;
+    image?: string;
+    livelink?: string;
+    githublink?: string;
+    overview: string;
+  };
+}
+
+const ProjectUpdate: React.FC<ProjectUpdateProps> = ({ projectData }) => {
   const isValidUrl = (url: string) =>
     url.startsWith("/") ||
     url.startsWith("http://") ||
     url.startsWith("https://");
-  const imageUrl = isValidUrl(projectData?.image)
-    ? projectData?.image
+
+  const imageUrl = isValidUrl(projectData?.image || "")
+    ? projectData.image
     : "/fallback-image.jpg";
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
+
+  const { register, handleSubmit } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const id = projectData._id;
       const res = await Update(data, "projects", id);
       if (res.acknowledged === true) {
-        toast.success("Update Successfull");
+        toast.success("Update Successful");
       } else {
-        toast.error("update unsuccessfull");
+        toast.error("Update Unsuccessful");
       }
     } catch (error) {
-      console.error("Failed to update post:", error);
+      console.error("Failed to update project:", error);
+      toast.error("An error occurred. Please try again.");
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
         defaultValue={imageUrl}
         type="text"
-        placeholder="Image Url"
+        placeholder="Image URL"
         className="py-2 my-2"
         {...register("image", { required: true })}
       />
@@ -54,18 +66,18 @@ const ProjectUpdate = ({ projectData }: any) => {
         type="text"
         placeholder="Live Link"
         className="py-2 my-2"
-        {...register("livelink", { required: false })}
+        {...register("livelink")}
       />
       <Input
         defaultValue={projectData.githublink}
         type="text"
-        placeholder="Github Link"
+        placeholder="GitHub Link"
         className="py-2 my-2"
-        {...register("githublink", { required: false })}
+        {...register("githublink")}
       />
       <Textarea
         defaultValue={projectData.overview}
-        placeholder="overview"
+        placeholder="Overview"
         className="py-2 my-2"
         {...register("overview", { required: true })}
       />
